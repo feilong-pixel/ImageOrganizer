@@ -225,7 +225,7 @@ This makes dependency and path issues much easier to diagnose.
 - `--mode`
   `move` or `copy`. Default is `move`.
 - `--lang`
-  `zh`, `en`, or `ja`. Default is `zh`.
+  `zh`, `en`, or `ja`. Default is `en`.
 
 
 ## 10. Output and Logs

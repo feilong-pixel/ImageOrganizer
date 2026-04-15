@@ -1,40 +1,15 @@
-# Media Archive Organizer
+# ImageOrganizer
 
-An advanced media organization tool for users who need duplicate detection, stricter matching, and more controllable archiving workflows.
+A Python tool for organizing image and video files by date.
 
-The program reads image EXIF time first. If EXIF time is unavailable, it falls back to the file's modified time.
-Organized files are placed into the target directory using a `year\month\day` folder structure.
+Language versions:
 
-It supports:
-
-- date-based folder organization
-- move or copy modes
-- perceptual duplicate detection for similar images
-- strict SHA-256 duplicate detection for exact file matches
-- multilingual CLI messages
-- per-run log output for traceability
-
-Language navigation:
-
-- English: [README.md](./README.md)
+- English (default): [README.md](./README.md)
 - 中文: [README_zh.md](./README_zh.md)
 - 日本語: [README_ja.md](./README_ja.md)
 
-
-## Positioning
-
-This project is intended for advanced usage.
-
-Compared with a basic date-based organizer, it adds:
-
-- duplicate detection
-- strict exact-file matching
-- perceptual image matching with threshold control
-- persistent hash database
-- stronger destination safety rules
-- automated smoke tests
-
-If you only need simple date-based sorting with minimal complexity, a basic organizer may be a better fit.
+The program reads image EXIF time first. If EXIF time is unavailable, it falls back to the file's modified time.
+Organized files are placed into the target directory using a `year\month\day` folder structure.
 
 
 ## Features
@@ -43,7 +18,6 @@ If you only need simple date-based sorting with minimal complexity, a basic orga
 - Organizes images and videos by date automatically
 - Uses `move` mode by default
 - Supports `copy` mode to keep original files
-- Supports duplicate detection: off, perceptual image matching (`phash`), or strict file matching (`SHA-256`)
 - Supports Chinese, English, and Japanese UI
 - Generates a separate log file for each run
 - Automatically appends a numeric suffix for duplicate file names
@@ -67,15 +41,8 @@ If you only need simple date-based sorting with minimal complexity, a basic orga
 Install dependency:
 
 ```powershell
-.\venv\Scripts\python.exe -m pip install Pillow
+pip install Pillow
 ```
-
-Notes:
-
-- It is recommended to create the virtual environment first with `python -m venv venv` from the project root
-- The project virtual environment is typically located at `.\venv`
-- Prefer `.\venv\Scripts\python.exe` and `.\venv\Scripts\pip.exe` so you always know where dependencies are being installed
-- If you run plain `python` or `pip`, you may accidentally use the global Python installation or another virtual environment
 
 For detailed environment setup, see:
 
@@ -86,22 +53,16 @@ For detailed environment setup, see:
 
 ## Basic Usage
 
-Enter the project root first, then run the command:
+Open a terminal in the project root and run:
 
 ```powershell
-cd D:\ImageOrganizer
-```
-
-Recommended command:
-
-```powershell
-.\venv\Scripts\python.exe .\main.py --src SOURCE_DIR --dst TARGET_DIR
+python main.py --src SOURCE_DIR --dst TARGET_DIR
 ```
 
 Example:
 
 ```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos
 ```
 
 
@@ -125,7 +86,7 @@ Organization mode:
 Example:
 
 ```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --mode copy
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos --mode copy
 ```
 
 ### `--lang`
@@ -136,48 +97,13 @@ Interface language:
 - `en`: English
 - `ja`: Japanese
 
-Example:
-
-```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang en
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang ja
-```
-
-### `--duplicate-detection`
-
-Duplicate detection mode:
-
-- `off`: disable duplicate detection
-- `phash`: detect visually similar images with perceptual hash
-- `strict`: detect exact file matches with SHA-256
-
-Notes:
-
-- `phash` is suitable for visually similar images
-- `strict` is for exact-match users who only want byte-identical files treated as duplicates
-- `hash_db` is only used as a hint inside the current destination root and will not redirect files into old destination folders
+Default: `en`
 
 Example:
 
 ```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --duplicate-detection off
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --duplicate-detection strict
-```
-
-### `--phash-threshold`
-
-Sets the maximum Hamming distance for perceptual hash matching. The default is `4`.
-
-Notes:
-
-- Lower values are stricter
-- Higher values make similar images more likely to be treated as duplicates
-- This option only applies when `--duplicate-detection phash` is used
-
-Example:
-
-```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --duplicate-detection phash --phash-threshold 4
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang en
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang ja
 ```
 
 
@@ -186,37 +112,25 @@ Example:
 ### Move files by default
 
 ```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos
 ```
 
 ### Copy files and keep originals
 
 ```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --mode copy
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos --mode copy
 ```
 
 ### Use English UI
 
 ```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang en
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang en
 ```
 
 ### Use Japanese UI
 
 ```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang ja
-```
-
-### Use strict duplicate detection
-
-```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --duplicate-detection strict
-```
-
-### Use perceptual duplicate detection
-
-```powershell
-.\venv\Scripts\python.exe .\main.py --src D:\InputPhotos --dst D:\SortedPhotos --duplicate-detection phash --phash-threshold 4
+python main.py --src D:\InputPhotos --dst D:\SortedPhotos --lang ja
 ```
 
 
@@ -245,7 +159,6 @@ After execution, the program prints the full path of the generated log file.
 - Uses image EXIF time first
 - Falls back to file modified time when EXIF is unavailable
 - Outputs files to `target\year\month\day\`
-- When duplicate detection is enabled, only records inside the current destination root are used as matches
 - Adds a numeric suffix if a file with the same name already exists
 
 Duplicate name example:
