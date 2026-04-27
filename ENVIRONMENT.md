@@ -18,12 +18,17 @@ It does not require a database, web server, or external service.
 
 ## 3. Required Python Dependency
 
-The project requires the following third-party package:
+The project requires the following third-party packages:
 
 - `Pillow`
+- `exifread`
+- `pywin32` (Windows only)
 
-`Pillow` is used to read EXIF metadata from image files.
+**Pillow** is used to read basic EXIF metadata from image files, such as `DateTimeOriginal`.
 
+**exifread** is used to extract additional EXIF fields and vendor-specific metadata that Pillow cannot read, including MakerNote and extended timestamp fields.
+
+**pywin32** is required on Windows to access and preserve file timestamps (CreationTime, AccessTime, ModifyTime) when moving or copying files.
 
 ## 4. Create a Virtual Environment
 

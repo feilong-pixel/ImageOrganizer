@@ -36,12 +36,12 @@ Organized files are placed into the target directory using a `year\month\day` fo
 
 - Windows 10 or Windows 11
 - Python 3.10 or later
-- Dependency: `Pillow`
+- Dependency: `Pillow`, `exifread`, `pywin32` (Windows only)
 
 Install dependency:
 
 ```powershell
-pip install Pillow
+pip install Pillow exifread pywin32
 ```
 
 For detailed environment setup, see:
